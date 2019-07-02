@@ -41,7 +41,9 @@ gulp.task('clean', function () {
 
 gulp.task('build-main-vendors', function () {
     gulp.src(
-            [   node_modules+'/core-js/client/shim.min.js',
+            [   node_modules+'/jquery/dist/jquery.min.js',
+            	node_modules+'/bootstrap/dist/js/bootstrap.min.js',
+            	node_modules+'/core-js/client/shim.min.js',
                 node_modules+'/zone.js/dist/zone.js',
                 node_modules+'/systemjs/dist/system.src.js',
             ]
@@ -69,7 +71,8 @@ gulp.task('copy-vendors-angular', function () {
     
     gulp.src(node_modules+'/angular-in-memory-web-api/**/*.js')
                .pipe(gulp.dest(dist+'/js/vendors/angular-in-memory-web-api'));
-               
+   
+
 });
 gulp.task('copy-vendors-rx', function () {
     gulp.src(node_modules+'/rxjs/**/*.js')
@@ -81,13 +84,28 @@ gulp.task('copy-vendors-rx', function () {
 });
 
 gulp.task('copy-vendors-css', function () {
-    gulp.src(node_modules+'/bootstrap/**/bootstrap.min.css')
+    gulp.src([node_modules+'/bootstrap/**/bootstrap.min.css',
+    		  node_modules+'/primeng/resources/primeng.min.css',
+    		  node_modules+'/primeng/resources/themes/nova-light/theme.css'
+    		 ])
                .pipe(concat('vendors.css'))
                .pipe(minifyCss())
                .pipe(gulp.dest(dist+'/css'));
 });
 
-gulp.task('copy-vendors'  , ['build-main-vendors','copy-vendors-angular', 'copy-vendors-rx','copy-vendors-css']);
+gulp.task('copy-vendors-resources', function () {
+    gulp.src(node_modules+'/primeicons/fonts/*')
+        .pipe(gulp.dest(dist+'/fonts'));
+
+    gulp.src(node_modules+'/primeng/resources/images/*')
+    	.pipe(gulp.dest(dist+'/images'));    
+
+    gulp.src(node_modules+'/primeng/resources/themes/nova-light/fonts/*')
+    	.pipe(gulp.dest(dist+'/fonts'));
+
+});
+
+gulp.task('copy-vendors'  , ['build-main-vendors','copy-vendors-angular', 'copy-vendors-rx','copy-vendors-css','copy-vendors-resources']);
 
 
 
