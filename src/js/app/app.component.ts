@@ -2,7 +2,7 @@ import {Component, Injectable} from '@angular/core';
 
 @Component({
   selector: 'app-component',
-  template: '<div>Hello {{ name }}!</div>',
+  template: '<h1>Hello {{ name }}!</h1>',
 })
 @Injectable()
 export class AppComponent {
