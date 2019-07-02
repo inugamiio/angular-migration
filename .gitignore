@@ -11,6 +11,7 @@ target
 .directory
 .springBeans
 .DS_Store
+package-lock.json
 *.bak
 *.class
 *.iml
