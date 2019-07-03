@@ -44,10 +44,14 @@ gulp.task('build-main-vendors', function () {
             [   node_modules+'/jquery/dist/jquery.min.js',
             	node_modules+'/bootstrap/dist/js/bootstrap.min.js',
             	node_modules+'/core-js/client/shim.min.js',
-                node_modules+'/zone.js/dist/zone.js',
-                node_modules+'/systemjs/dist/system.src.js',
+                node_modules+'/zone.js/dist/zone.min.js',
+                node_modules+'/systemjs/dist/system.js',
+                node_modules+'/chartjs/chart.js',
+                node_modules+'/d3/dist/d3.min.js',
+                node_modules+'/moment/min/moment.min.js'
             ]
             )
+        .pipe(uglify())
         .pipe(concat('vendors.js'))
         .pipe(gulp.dest(dist+'/js/vendors/'));
 });
@@ -61,26 +65,27 @@ gulp.task('copy-vendors-angular', function () {
                .pipe(gulp.dest(dist+'/js/vendors/core-js'));
                
     gulp.src(node_modules+'/plugin-typescript/**/*.js')
+               .pipe(uglify())
                .pipe(gulp.dest(dist+'/js/vendors/plugin-typescript'));
 
     gulp.src(node_modules+'/typescript/**/*.js')
+               .pipe(uglify())
                .pipe(gulp.dest(dist+'/js/vendors/typescript'));
+
 
     gulp.src(node_modules+'/zone.js/**/*.js')
                .pipe(gulp.dest(dist+'/js/vendors/zone.js'));
     
     gulp.src(node_modules+'/angular-in-memory-web-api/**/*.js')
                .pipe(gulp.dest(dist+'/js/vendors/angular-in-memory-web-api'));
+
+
    
 
 });
 gulp.task('copy-vendors-rx', function () {
-    gulp.src(node_modules+'/rxjs/**/*.js')
-               .pipe(gulp.dest(dist+'/js/vendors/rxjs'));
-
-    gulp.src(node_modules+'/rxjs-compat/**/*.js')
-               .pipe(gulp.dest(dist+'/js/vendors/rxjs-compat'));
-               
+    gulp.src(node_modules+'/rxjs-system-bundle/**/*.js')
+               .pipe(gulp.dest(dist+'/js/vendors/rxjs-system-bundle'));     
 });
 
 gulp.task('copy-vendors-css', function () {
@@ -125,14 +130,6 @@ gulp.task('copy-resources-app-bootjs', function () {
                .pipe(sourcemaps.init())
                .pipe(sourcemaps.write('./maps'))
                .pipe(gulp.dest(dist+'/js'));
-
-               /*
-               gulp.src(src+'/js/system.boot.js')
-               .pipe(sourcemaps.init())
-               .pipe(uglify())
-               .pipe(sourcemaps.write('./maps'))
-               .pipe(gulp.dest(dist+'/js'));
-               */
 });
 
 gulp.task('copy-resources-html', function () {
