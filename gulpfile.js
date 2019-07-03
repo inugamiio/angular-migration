@@ -58,6 +58,7 @@ gulp.task('build-main-vendors', function () {
 gulp.task('copy-vendors-angular', function () {
     gulp.src(node_modules+'/@angular/*/bundles/*.js')
                .pipe(gulpIgnore.exclude('**/*testing*'))
+               .pipe(uglify())
                .pipe(gulp.dest(dist+'/js/vendors/@angular'));
 
                
